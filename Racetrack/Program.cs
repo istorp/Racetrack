@@ -12,9 +12,10 @@ namespace Racetrack
     {
         static void Main(string[] args)
         {
+            
             var AvalibelHorses = LoadHorses();
             var race = new Race()
-                .AddHorse(7, AvalibelHorses)
+                .AddHorse(5 , AvalibelHorses)
                 .StartRace();
             Console.ReadLine();
         }
@@ -30,7 +31,7 @@ namespace Racetrack
                 {
                     Name = parts[0],
                     Age = Int32.Parse(parts[1]),
-                    Speed =Int32.Parse(parts[2])
+                    Speed =Int32.Parse(parts[2])    
                 });
 
             }
@@ -73,6 +74,7 @@ namespace Racetrack
                 Thread.Sleep(3000);
                 if (Horses.Where(h=>h.HasFinnish==true).Count()==Horses.Count)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("The race is finish ");
                     Console.WriteLine("The winner is "+Place.First());
                     
@@ -105,16 +107,38 @@ namespace Racetrack
 
         private void DoWork()
         {
+            Random rand = new Random();
+            bool pastCheckpoint1 = false;
+            bool pastCheckpoint2 = false;
             bool pastCheckpoint = false;
             while (true)
             {
-                if (Distance>=100 && pastCheckpoint==false)
+                if (Distance >= 50 && pastCheckpoint == false)
                 {
-                    Console.WriteLine(Name+" has passede 500 meter");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Speed +=  rand.Next(1, 10);
+                    Console.WriteLine(Name + " has passede 200 meter, new speed is "+Speed);
                     pastCheckpoint = true;
                 }
+
+                if (Distance>=100 && pastCheckpoint1==false)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Speed += rand.Next(1, 15);
+                    Console.WriteLine(Name+ " has passede 500 meter, new speed is " + Speed);
+                    pastCheckpoint1 = true;
+                }
+                if (Distance >= 250 && pastCheckpoint2 == false)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Speed += rand.Next(1, 15);
+                    Console.WriteLine(Name + " has passede 700 meter, new speed is "+Speed);
+                    pastCheckpoint2 = true;
+                }
+
                 if (Distance>=300)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(Name+" Has finished the race");
                     HasFinnish = true;
                     Race.Result(Name);
