@@ -37,7 +37,7 @@ namespace Racetrack
             }
             //Console.WriteLine(data);
             return horses;
-        }
+        }//snyggt anders
     }
 
     class Race
